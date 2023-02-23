@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model task {
+  id          BigInt    @id @default(autoincrement())
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  description String?
+  discount    Float?
+  price       Float?
+}
+
+model wyceny {
+  id         String    @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created_at DateTime? @db.Timestamptz(6)
+  title      String?
+  price      Int?      @db.SmallInt
+  positions  Json[]    @db.Json
+  user       String?   @db.Uuid
+  company    String?
+}
