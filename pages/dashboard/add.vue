@@ -7,6 +7,7 @@
             <div class="companySelect mx-6">
               <h1>Firma</h1>
               <select
+                required
                 v-model="company"
                 class="cursor-pointer"
                 name="company"
@@ -20,6 +21,7 @@
             <div class="companySelect">
               <h1>Usługa</h1>
               <select
+                required
                 v-model="service"
                 class="cursor-pointer"
                 name="company"
@@ -57,14 +59,26 @@
           </tr>
           <tr>
             <td>
-              <textarea v-model="description" name="description"></textarea>
+              <textarea
+                required
+                v-model="description"
+                name="description"
+              ></textarea>
             </td>
-            <td><input v-model="quantity" class="number" type="number" /></td>
             <td>
-              <input v-model="priceForOne" class="number" type="number" />
+              <input required v-model="quantity" class="number" type="number" />
             </td>
             <td>
               <input
+                required
+                v-model="priceForOne"
+                class="number"
+                type="number"
+              />
+            </td>
+            <td>
+              <input
+                required
                 v-model="discount"
                 class="number"
                 min="0"
@@ -135,6 +149,7 @@ const addPosition = () => {
   clearInputs();
 };
 const closeModal = () => {
+  createWycena();
   navigateTo('/dashboard');
   clearInputs();
 };
@@ -157,7 +172,34 @@ const clearInputs = () => {
   priceForOne.value = null;
   price.value = null;
 };
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+async function createWycena() {
+  try {
+    const response = await fetch('/api/addWycena', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title: 'My Wycena',
+        price: 100,
+        company: 'My Company',
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
+/* {
+    title: 'test',
+    price: 1200,
+    created_at: new Date
+  } */
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
 
 <style scoped>
