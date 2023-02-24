@@ -104,7 +104,7 @@
         </div>
         <div class="buttons">
           <button>Wyślij wycenę</button>
-          <button>Dodaj Draft</button>
+          <button @click="add">Dodaj Draft</button>
         </div>
       </footer>
     </div>
@@ -112,8 +112,6 @@
 </template>
 
 <script setup lang="ts">
-import axios from 'axios';
-
 const company = ref(''); //All Task
 const service = ref('');
 let summary = ref(0);
@@ -149,7 +147,6 @@ const addPosition = () => {
   clearInputs();
 };
 const closeModal = () => {
-  createWycena();
   navigateTo('/dashboard');
   clearInputs();
 };
@@ -172,19 +169,26 @@ const clearInputs = () => {
   priceForOne.value = null;
   price.value = null;
 };
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-async function createWycena() {
+//CreateWycena
+const add = () => {
+  createWycena({
+    title: service.value,
+    price: summary.value,
+    positions: positions,
+    company: company.value,
+  });
+  console.log(service)
+  closeModal();
+};
+//////////////////////////////////////Handlers
+async function createWycena(body: Object) {
   try {
     const response = await fetch('/api/addWycena', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        title: 'My Wycena',
-        price: 100,
-        company: 'My Company',
-      }),
+      body: JSON.stringify(body),
     });
     const data = await response.json();
     console.log(data);
@@ -192,14 +196,7 @@ async function createWycena() {
     console.error(error);
   }
 }
-
-/* {
-    title: 'test',
-    price: 1200,
-    created_at: new Date
-  } */
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////
 </script>
 
 <style scoped>

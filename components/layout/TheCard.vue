@@ -1,9 +1,11 @@
 <template>
   <div v-if="!addingCard" class="card">
-    <header><h1 class="truncate">{{cardProps.company}}</h1></header>
+    <header>
+      <h1 class="truncate">{{ cardProps.company }}</h1>
+    </header>
     <main>
-      <h1 class="truncate">{{cardProps.price}} PLN</h1>
-      <h2 class="truncate">{{cardProps.title}}</h2>
+      <h1 class="truncate">{{ cardProps.price }} PLN</h1>
+      <h2 class="truncate">{{ cardProps.title }}</h2>
       <h3 class="truncate">Utworzone: {{ cardProps.created_at }}</h3>
     </main>
     <footer>
@@ -11,19 +13,21 @@
     </footer>
   </div>
   <div v-else class="adder card flex flex-center">
-    <NuxtLink to="/dashboard/add"><img src="/icons/file-plus.svg" alt="" /></NuxtLink>
+    <NuxtLink to="/dashboard/add"
+      ><img src="/icons/file-plus.svg" alt=""
+    /></NuxtLink>
   </div>
 </template>
 
 <script setup lang="ts">
 const props = defineProps({
   addingCard: {
-    type: Boolean
+    type: Boolean,
   },
-  cardProps : {
-    type: Object
-  }
-})
+  cardProps: {
+    type: Object,
+  },
+});
 </script>
 
 <style scoped>
@@ -40,14 +44,14 @@ const props = defineProps({
   flex-direction: column;
   cursor: pointer;
 }
-.adder{
+.adder {
   align-items: center;
   justify-content: center;
 }
-.adder img{
+.adder img {
   width: 100px;
 }
-.card:hover{
+.card:hover {
   opacity: 0.5;
 }
 header {
@@ -72,14 +76,14 @@ main h1 {
 main h2 {
   font-weight: 400;
 }
-footer{
+footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: 1rem;
 }
-footer img{
+footer img {
   width: 20px;
 }
 .draft {

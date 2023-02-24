@@ -23,6 +23,7 @@ definePageMeta({
 });
 
 const user = useSupabaseUser();
+
 onMounted(() => {
   watchEffect(() => {
     if (!user.value) {
@@ -30,14 +31,12 @@ onMounted(() => {
     }
   });
 });
-
 const { data: wyceny } = await useFetch('/api/wyceny', {
   key: `items for ${user.value?.id}`,
   headers: useRequestHeaders(['cookie']),
-  body: {
-    test: 'test',
-    id: user.value?.id
-  }
+});
+watchEffect(() => {
+  wyceny.value;
 });
 </script>
 
